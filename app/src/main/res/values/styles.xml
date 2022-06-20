@@ -5,14 +5,6 @@
        text will be shown directly on the phone background. This could
        hamper visibility depending on the user background.
     -->
-    <style name="Theme.Transparent" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="android:windowIsTranslucent">true</item>
-        <item name="android:windowBackground">@android:color/transparent</item>
-        <item name="android:windowContentOverlay">@null</item>
-        <item name="android:windowNoTitle">true</item>
-        <item name="android:windowIsFloating">true</item>
-        <item name="android:backgroundDimEnabled">false</item>
-    </style>
     <!--
        Transparent2
        <item name="android:windowNoTitle">true</item>
@@ -21,25 +13,11 @@
        area where you can usually see the time and the wifi quality).
        You should switch both boolean values to counter that (see Transparent3)
     -->
-    <style name="Theme.Transparent2" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="android:windowNoTitle">true</item>
-        <item name="android:windowActionBar">false</item>
-        <item name="android:windowFullscreen">true</item>
-        <item name="android:windowContentOverlay">@null</item>
-        <item name="android:windowIsTranslucent">true</item>
-    </style>
     <!--
        Transparent3
        Use this for a splashscreen. The title and actionbar are
        still there but that's what you want here
     -->
-    <style name="Theme.Transparent3" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="android:windowNoTitle">false</item>
-        <item name="android:windowActionBar">true</item>
-        <item name="android:windowFullscreen">true</item>
-        <item name="android:windowContentOverlay">@null</item>
-        <item name="android:windowIsTranslucent">true</item>
-    </style>
 
     <!--
        Transparent4

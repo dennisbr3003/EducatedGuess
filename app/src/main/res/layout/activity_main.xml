@@ -15,7 +15,7 @@
         android:text="@string/_info"
         android:textAlignment="center"
         android:textColor="@color/black"
-        android:textSize="24sp"
+        android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -24,35 +24,38 @@
         android:id="@+id/radioGroup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="30dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtInfo">
 
         <RadioButton
-            android:id="@+id/radioButton"
+            android:id="@+id/rbTwo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:text="Two digits number"
-            android:textSize="30sp" />
+            android:layout_margin="5dp"
+            android:tag="two"
+            android:text="@string/_twodigits"
+            android:textSize="24sp" />
 
         <RadioButton
             android:id="@+id/rbThree"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:text="Three digits number"
-            android:textSize="30sp" />
+            android:layout_margin="5dp"
+            android:tag="three"
+            android:text="@string/_threedigits"
+            android:textSize="24sp" />
 
         <RadioButton
             android:id="@+id/rbFour"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:text="Four digits number"
-            android:textSize="30sp" />
+            android:layout_margin="5dp"
+            android:tag="four"
+            android:text="@string/_fourdigits"
+            android:textSize="24sp" />
     </RadioGroup>
 
     <Button
@@ -61,13 +64,25 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
         android:width="350dp"
-        android:backgroundTint="@android:color/holo_red_dark"
-        android:text="Start"
+        android:backgroundTint="@android:color/holo_green_dark"
+        android:text="@string/_start"
         android:textColor="@color/white"
         android:textSize="34sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
+        app:layout_constraintTop_toBottomOf="@+id/radioGroup"
+        tools:ignore="TextContrastCheck" />
+
+    <ImageView
+        android:layout_width="389dp"
+        android:layout_height="147dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnStart"
+        app:srcCompat="@drawable/green_questionmarks" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
