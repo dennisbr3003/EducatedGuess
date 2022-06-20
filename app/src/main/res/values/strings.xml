@@ -1,8 +1,12 @@
 <resources>
-    <string name="app_name">MyHigherLower</string>
+    <string name="app_name">Educated Guess</string>
     <string name="title_activity_full_screen_splash">FullScreenSplashActivity</string>
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
     <string name="_educated_guess">Educated Guess</string>
     <string name="_splashscreen_graphic">splashscreen graphic</string>
+    <string name="_info">Please select an number of digits.
+    The number of digits I keep in my mind and
+    the number of digits you choose will be the same. Also,
+    never forget that you have 10 rights</string>
 </resources>
