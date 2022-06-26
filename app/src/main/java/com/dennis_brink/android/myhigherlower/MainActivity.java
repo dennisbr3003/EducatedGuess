@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
                     if(v instanceof RadioButton){
                         Log.d("DENNIS_B", "Radiobutton tag: " + v.getTag() + " is checked: " + ((RadioButton) v).isChecked());
                         if(((RadioButton) v).isChecked()){
-                            i.putExtra(String.valueOf(v.getTag()), true);
+                            i.putExtra("tag", String.valueOf(v.getTag()));
                             p++;
                         }
                     }
@@ -55,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
                     return;
                 } else {
                     startActivity(i);
+                    finish();
                 }
 
             }

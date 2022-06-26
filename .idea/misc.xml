@@ -4,8 +4,9 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/AndroidJava/Projects/MyHigherLower/app/src/main/res/drawable/eg_main_logo.xml" value="0.1" />
+        <entry key="..\:/AndroidJava/Projects/MyHigherLower/app/src/main/res/layout-v31/activity_game.xml" value="0.29791666666666666" />
         <entry key="..\:/AndroidJava/Projects/MyHigherLower/app/src/main/res/layout/activity_full_screen_splash.xml" value="0.13802083333333334" />
-        <entry key="..\:/AndroidJava/Projects/MyHigherLower/app/src/main/res/layout/activity_game.xml" value="0.13802083333333334" />
+        <entry key="..\:/AndroidJava/Projects/MyHigherLower/app/src/main/res/layout/activity_game.xml" value="0.2988679352838745" />
         <entry key="..\:/AndroidJava/Projects/MyHigherLower/app/src/main/res/layout/activity_main.xml" value="0.26856884057971014" />
         <entry key="..\:/AndroidJava/Projects/MyHigherLower/app/src/main/res/layout/activity_splash.xml" value="0.26856884057971014" />
       </map>
