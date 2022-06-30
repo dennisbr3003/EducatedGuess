@@ -21,17 +21,20 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class GameActivity extends AppCompatActivity {
 
-    private TextView textViewLast, textViewRight, textViewHint, textViewSummary;
+    private TextView textViewLast, textViewRight, textViewHint, textViewSummary, textViewFail;
     private Button buttonConfirm, buttonPlayAgain, buttonStop;
     private EditText editTextNumberGuess;
     private ImageView imageViewArrows, imageViewResult;
     private Animation animationBounce;
     private Animation animationBlink;
-    private ArrayList<Integer> imageList = new ArrayList<>();
+    private Animation animationFadeIn;
     private ArrayList<Integer> userInputList = new ArrayList<>();
+    private Map<String, Integer> imageMap = new HashMap<>();
 
     int number=0;
     int attempts=10;
@@ -45,21 +48,22 @@ public class GameActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
 
-        fillImageList();
+        fillImageMap();
 
         textViewHint = findViewById(R.id.textViewHint);
         textViewLast = findViewById(R.id.textViewLast);
         textViewRight = findViewById(R.id.textViewRight);
         textViewSummary = findViewById(R.id.textViewSummary);
+        textViewFail = findViewById(R.id.textViewFail);
 
         textViewRight.setText(String.valueOf(attempts));
         editTextNumberGuess = findViewById(R.id.editTextNumberGuess);
         imageViewArrows = findViewById(R.id.imgArrowUpDown);
         imageViewResult = findViewById(R.id.imageViewResult);
-        
 
         animationBounce = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.bounce);
         animationBlink = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.blink);
+        animationFadeIn = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fade_in);
 
         animationBounce.setAnimationListener(new Animation.AnimationListener() {
             @Override
@@ -120,6 +124,7 @@ public class GameActivity extends AppCompatActivity {
         });
 
         setFocusAndSHowKeyBoard();
+        setupLogo();
 
         buttonConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -164,47 +169,73 @@ public class GameActivity extends AppCompatActivity {
         userInputList.add(user_number);
         textViewLast.setText(String.valueOf(user_number));
         textViewRight.setText(String.valueOf(attempts));
-        if(number == user_number){
+        try {
+            if (attempts == 0) {
 
-            Log.d("DENNIS_B", "GameActivity.class: (processUserInput) number is equal to user input");
+                Log.d("DENNIS_B", "GameActivity.class: (processUserInput) number is not guessed by user");
 
-            textViewHint.setText("Spot on! You must be some kind of psychic!");
-            imageViewArrows.setImageResource(imageList.get(2));
-            imageViewArrows.setTag("2");
-            imageViewArrows.startAnimation(animationBounce);
-            //hide keyboard
-            hideKeyBoard();
-            editTextNumberGuess.setVisibility(View.INVISIBLE);
-            buttonConfirm.setVisibility(View.INVISIBLE);
-            //put some values below the entry textview
-            buttonPlayAgain.setVisibility(View.VISIBLE);
-            buttonStop.setVisibility(View.VISIBLE);
-            textViewSummary.setText("Congratulations! \n\n You guessed the generated number " + number + ".\n"
-                                  + "It took you " + index + " attempts to guess it! \n\n"
-                                  + "Your guesses: \n" +  userInputList
-                                  + "\n\n\n\n Would you like to play again?"
-                                    );
-            imageViewResult.setImageResource(imageList.get(3));
-            imageViewResult.setVisibility(View.VISIBLE);
+                imageViewResult.setVisibility(View.INVISIBLE);
+                editTextNumberGuess.setVisibility(View.INVISIBLE);
+                buttonConfirm.setVisibility(View.INVISIBLE);
+                textViewHint.setVisibility(View.INVISIBLE);
+                imageViewArrows.setImageResource(android.R.color.transparent); // INVISIBLE or GONE did not work?
+                hideKeyBoard();
+
+                textViewFail.setText("OMG this is awful! I cannot believe you missed this one!");
+                textViewFail.setVisibility(View.VISIBLE);
+
+                //put some values below the entry textview
+                buttonPlayAgain.setVisibility(View.VISIBLE);
+                buttonStop.setVisibility(View.VISIBLE);
+                textViewSummary.setText("You could not guess the generated number " + number + ".\n\n"
+                                      + "Your guesses: \n" + userInputList
+                                      + "\n\n Would you like to give it another shot?"
+                );
+                imageViewResult.setImageResource(imageMap.get("epic_fail"));
+                imageViewResult.setVisibility(View.VISIBLE);
+                imageViewResult.setAnimation(animationFadeIn); // not startAnimation
+                return;
+            }
+            if (number == user_number) {
+
+                Log.d("DENNIS_B", "GameActivity.class: (processUserInput) number is equal to user input");
+
+                textViewHint.setText("Spot on! You must be some kind of psychic!");
+                imageViewArrows.setImageResource(imageMap.get("success_2"));
+                imageViewArrows.setTag("2");
+                imageViewArrows.startAnimation(animationBounce);
+                hideKeyBoard();
+                editTextNumberGuess.setVisibility(View.INVISIBLE);
+                buttonConfirm.setVisibility(View.INVISIBLE);
+                buttonPlayAgain.setVisibility(View.VISIBLE);
+                buttonStop.setVisibility(View.VISIBLE);
+                textViewSummary.setText("Congratulations! \n\n You guessed the generated number " + number + ".\n"
+                        + "It took you " + index + " attempts to guess it! \n\n"
+                        + "Your guesses: \n" + userInputList
+                        + "\n\n\n\n Would you like to play again?"
+                );
+                imageViewResult.setImageResource(imageMap.get("success_3"));
+                imageViewResult.setVisibility(View.VISIBLE);
+                return;
+            }
+            if (number > user_number) {
+                textViewHint.setText("You may want to increase your guess...");
+                imageViewArrows.setImageResource(imageMap.get("arrow_up"));
+                imageViewArrows.setTag("1");
+                imageViewArrows.startAnimation(animationBounce);
+                return;
+            }
+            if (number < user_number) {
+                textViewHint.setText("You may want to decrease your guess...");
+                imageViewArrows.setImageResource(imageMap.get("arrow_down"));
+                imageViewArrows.setTag("0");
+                imageViewArrows.startAnimation(animationBounce);
+                return;
+            }
         }
-        if(number > user_number){
-            textViewHint.setText("You may want to increase your guess...");
-            imageViewArrows.setImageResource(imageList.get(1));
-            imageViewArrows.setTag("1");
-            imageViewArrows.startAnimation(animationBounce);
+        finally{
+            editTextNumberGuess.setText("");
         }
-        if(number < user_number){
-            textViewHint.setText("You may want to decrease your guess...");
-            imageViewArrows.setImageResource(imageList.get(0));
-            imageViewArrows.setTag("0");
-            imageViewArrows.startAnimation(animationBounce);
-        }
-        if(attempts==0){
-            hideKeyBoard(); // you are done
-            editTextNumberGuess.setVisibility(View.INVISIBLE);
-            buttonConfirm.setVisibility(View.INVISIBLE);
-        }
-        editTextNumberGuess.setText("");
 
     }
     private void setFocusAndSHowKeyBoard(){
@@ -214,7 +245,6 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void hideKeyBoard(){
-        // hide keyboard
         InputMethodManager imm = (InputMethodManager) getSystemService(this.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(editTextNumberGuess.getWindowToken(), 0);
     }
@@ -225,17 +255,25 @@ public class GameActivity extends AppCompatActivity {
         System.exit(1);
     }
 
-    private void fillImageList(){
-       imageList.add(R.drawable.blue_arrow_down); //0
-       imageList.add(R.drawable.green_arrow_up); //1
-       imageList.add(R.drawable.success_2); //2
-       imageList.add(R.drawable.success_3); //3
-       imageList.add(R.drawable.epic_fail); //4
+    private void fillImageMap(){
 
+        // a hashmap would probably be better than an arraylist (readability)
+        imageMap.put("arrow_down", R.drawable.blue_arrow_down);
+        imageMap.put("arrow_up", R.drawable.green_arrow_up);
+        imageMap.put("success_2", R.drawable.success_2);
+        imageMap.put("success_3", R.drawable.success_3);
+        imageMap.put("epic_fail", R.drawable.epic_fail);
     }
 
+    private void setupLogo(){
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setLogo(R.drawable.eg_logo_padding_game);
+        getSupportActionBar().setTitle(getString(R.string._appname));
+        getSupportActionBar().setSubtitle("Don't be a failure, get it right!");
+        getSupportActionBar().setDisplayUseLogoEnabled(true);
+    }
     private void backToMain(){
-        // hide keyboard
+
         hideKeyBoard();
 
         // first parameter = from, second parameter what to start
